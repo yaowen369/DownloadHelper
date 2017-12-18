@@ -1,0 +1,63 @@
+*.iml
+.gradle
+.idea
+build
+gradle
+local.properties
+gradle.properties
+gradlew
+gradlew.bat
+define.gradle
+
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+
+
+build/
+app/build/
+swipeMenuListView/build/
+local.properties
+.gradle/
+.idea/
+
+### yaowen add those from  stackoverflow answer : 20150773  :start
+### http://stackoverflow.com/questions/16736856/what-should-be-in-my-gitignore-for-an-android-studio-project
+
+.DS_Store
+
+#built application files
+*.apk
+*.ap_
+# files for the dex VM
+*.dex
+# Java class files
+*.class
+# generated files
+bin/
+gen/
+
+# Windows thumbnail db
+Thumbs.db
+# OSX files
+.DS_Store
+# Eclipse project files
+.classpath
+.project
+# Android Studio
+*.iml
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+###yaowen add those from  stackoverflow answer : 20150773  :end
+
+## word  file
+~$*.doc
+~$*.docx
+
+##for release signature  apk
+app/app-release.apk
+~$*.apk
