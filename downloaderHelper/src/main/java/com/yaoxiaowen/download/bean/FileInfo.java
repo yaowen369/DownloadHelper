@@ -3,6 +3,7 @@ package com.yaoxiaowen.download.bean;
 import android.support.annotation.IntRange;
 
 import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.utils.DebugUtils;
 
 import java.io.Serializable;
 
@@ -20,8 +21,8 @@ public class FileInfo implements Serializable{
     private long size;   //文件的总尺寸
     private long downloadLocation; // 记录下载的位置
 
-    @IntRange(from = Constant.status.WAIT, to = Constant.status.FAIL)
-    private int downStatus = Constant.status.PAUSE;   //下载的状态信息
+    @IntRange(from = Constant.Status.WAIT, to = Constant.Status.UNKNOWN)
+    private int downStatus = Constant.Status.PAUSE;   //下载的状态信息
 
     public FileInfo() {
     }
@@ -82,7 +83,7 @@ public class FileInfo implements Serializable{
                 ", filePath='" + filePath + '\'' +
                 ", size=" + size +
                 ", downloadLocation=" + downloadLocation +
-                ", downStatus=" + downStatus +
+                ", downStatus=" + DebugUtils.getStatusDesc(downStatus) +
                 '}';
     }
 }

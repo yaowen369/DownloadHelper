@@ -1,4 +1,4 @@
-package com.yaoxiaowen.download.debug;
+package com.yaoxiaowen.download.utils;
 
 import android.content.Context;
 import android.widget.Toast;
