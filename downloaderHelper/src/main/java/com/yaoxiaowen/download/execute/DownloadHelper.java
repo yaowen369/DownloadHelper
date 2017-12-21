@@ -60,7 +60,10 @@ public class DownloadHelper {
     }
 
     public DownloadHelper addTask(String url, File file, String action){
-        requests.add(createRequest(url, file, action, Constant.Request.loading));
+        RequestInfo requestInfo = createRequest(url, file, action, Constant.Request.loading);
+        LogUtils.i(TAG, "addTask() requestInfo=" + requestInfo);
+
+        requests.add(requestInfo);
         return this;
     }
 

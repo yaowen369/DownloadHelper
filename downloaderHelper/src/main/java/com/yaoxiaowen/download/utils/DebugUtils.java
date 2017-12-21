@@ -31,4 +31,15 @@ public class DebugUtils {
                 return "  错误的未知状态 ";
         }
     }
+
+    public static String getRequestDictateDesc(@IntRange(from = Constant.Request.loading, to = Constant.Request.pause) int dictate){
+        switch (dictate){
+            case Constant.Request.loading:
+                return " loading ";
+            case Constant.Request.pause:
+                return " pause ";
+            default:
+                return " dictate描述错误  ";
+        }
+    }
 }

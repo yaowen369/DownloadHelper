@@ -84,6 +84,8 @@ public class DownloadService extends Service{
         DbHolder dbHolder = new DbHolder(getBaseContext());
         FileInfo mFileInfo = dbHolder.getFileInfo(mDownloadInfo.getUniqueId());
 
+        LogUtils.i(TAG, "executeDownload() -> task=" + task + "\t mFileInfo=" + mFileInfo);
+
         //Todo 这里为什么会存在如此复杂的状态判断
 
         if (null == task){ //之前没有类似任务

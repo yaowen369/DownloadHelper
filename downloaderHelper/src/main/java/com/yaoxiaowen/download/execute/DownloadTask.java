@@ -35,6 +35,10 @@ public class DownloadTask implements Runnable{
     private DbHolder dbHolder;
     private boolean isPause;
 
+    //Todo 测试语句，记得删除
+    private int testCount = 0;
+    private boolean hasPrintContext = false;
+
 
     public DownloadTask(Context context, DownloadInfo info, DbHolder dbHolder) {
         this.context = context;
@@ -46,6 +50,8 @@ public class DownloadTask implements Runnable{
         mFileInfo.setId(info.getUniqueId());
         mFileInfo.setDownloadUrl(info.getUrl());
         mFileInfo.setFilePath(info.getFile().getAbsolutePath());
+
+        LogUtils.i(TAG, "构造函数 -> 初始化 mFileInfo=" + mFileInfo);
 
         FileInfo fileInfoFromDb = dbHolder.getFileInfo(info.getUniqueId());
         long location = 0;
@@ -76,6 +82,8 @@ public class DownloadTask implements Runnable{
 
         mFileInfo.setSize(fileSize);
         mFileInfo.setDownloadLocation(location);
+
+        LogUtils.i(TAG, "构造函数() -> 初始化完毕  mFileInfo=" + mFileInfo);
     }
 
     @Override
@@ -118,7 +126,7 @@ public class DownloadTask implements Runnable{
 
         //Todo 这个action 怎么设置的，还没搞明白
         Intent intent = new Intent();
-        intent.setAction(intent.getAction());
+        intent.setAction(info.getAction());
         intent.putExtra(Constant.DOWNLOAD_EXTRA, mFileInfo);
         context.sendBroadcast(intent);
 
@@ -155,6 +163,8 @@ public class DownloadTask implements Runnable{
             http.connect();
 
             inStream = http.getInputStream();
+            //Todo 将buffer设置的更小一些，也许可以方便的设置
+//            byte[] buffer = new byte[1024*8];
             byte[] buffer = new byte[1024*8];
             int offset;
 
@@ -167,18 +177,25 @@ public class DownloadTask implements Runnable{
                     isPause = false;
                     dbHolder.saveFile(mFileInfo);
                     context.sendBroadcast(intent);
-                }
-                accessFile.write(buffer,0, offset);
-                mFileInfo.setDownloadLocation( mFileInfo.getDownloadLocation()+offset );
-                mFileInfo.setDownStatus(Constant.Status.LOADING);
-                if (SystemClock.uptimeMillis()-millis >= 1000){
-                    millis = SystemClock.uptimeMillis();
-                    dbHolder.saveFile(mFileInfo);
-                    context.sendBroadcast(intent);
                     http.disconnect();
                     accessFile.close();
                     inStream.close();
                     return;
+                }
+                accessFile.write(buffer,0, offset);
+                mFileInfo.setDownloadLocation( mFileInfo.getDownloadLocation()+offset );
+                mFileInfo.setDownStatus(Constant.Status.LOADING);
+
+
+                if (testCount > 1024) {
+                    LogUtils.i(TAG, "while循环() -> offest = " + offset);
+                    testCount = 0;
+                }
+                if (SystemClock.uptimeMillis()-millis >= 1000){
+                    millis = SystemClock.uptimeMillis();
+                    dbHolder.saveFile(mFileInfo);
+                    LogUtils.i(TAG, "while循环() -> 发出广播 mFileInfo" + mFileInfo);
+                    context.sendBroadcast(intent);
                 }
             }// end of "while(..."
 

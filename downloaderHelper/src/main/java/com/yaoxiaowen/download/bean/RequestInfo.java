@@ -4,6 +4,7 @@ package com.yaoxiaowen.download.bean;
 import android.support.annotation.IntRange;
 
 import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.utils.DebugUtils;
 
 import java.io.Serializable;
 
@@ -45,7 +46,7 @@ public class RequestInfo implements Serializable{
     @Override
     public String toString() {
         return "RequestInfo{" +
-                "dictate=" + dictate +
+                "dictate=" + DebugUtils.getRequestDictateDesc(dictate) +
                 ", downloadInfo=" + downloadInfo +
                 '}';
     }
