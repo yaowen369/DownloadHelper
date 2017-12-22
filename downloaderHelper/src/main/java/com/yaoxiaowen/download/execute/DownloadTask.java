@@ -6,7 +6,8 @@ import android.os.SystemClock;
 import android.support.annotation.IntRange;
 import android.util.Log;
 
-import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.bean.DownloadInfo;
 import com.yaoxiaowen.download.bean.FileInfo;
 import com.yaoxiaowen.download.db.DbHolder;
@@ -35,9 +36,6 @@ public class DownloadTask implements Runnable{
     private DbHolder dbHolder;
     private boolean isPause;
 
-    //Todo 测试语句，记得删除
-    private int testCount = 0;
-    private boolean hasPrintContext = false;
 
 
     public DownloadTask(Context context, DownloadInfo info, DbHolder dbHolder) {
@@ -95,17 +93,17 @@ public class DownloadTask implements Runnable{
         isPause = true;
     }
 
-    @IntRange(from = Constant.Status.WAIT, to = Constant.Status.UNKNOWN)
+    @IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL)
     public int getStatus(){
         if (null != mFileInfo){
-            return mFileInfo.getDownStatus();
+            return mFileInfo.getDownloadStatus();
         }
-        return Constant.Status.UNKNOWN;
+        return DownloadStatus.FAIL;
     }
 
-    public void setFileStatus( @IntRange(from = Constant.Status.WAIT, to = Constant.Status.UNKNOWN)
+    public void setFileStatus( @IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL)
                                int status){
-        mFileInfo.setDownStatus(status);
+        mFileInfo.setDownloadStatus(status);
     }
 
     public void sendBroadcast(Intent intent){
@@ -121,13 +119,12 @@ public class DownloadTask implements Runnable{
     }
 
     private void download(){
-        mFileInfo.setDownStatus(Constant.Status.PREPARE);
+        mFileInfo.setDownloadStatus(DownloadStatus.PREPARE);
         LogUtils.i(TAG, "准备开始下载");
 
-        //Todo 这个action 怎么设置的，还没搞明白
         Intent intent = new Intent();
         intent.setAction(info.getAction());
-        intent.putExtra(Constant.DOWNLOAD_EXTRA, mFileInfo);
+        intent.putExtra(DownloadConstant.DOWNLOAD_EXTRA, mFileInfo);
         context.sendBroadcast(intent);
 
         RandomAccessFile accessFile = null;
@@ -163,8 +160,6 @@ public class DownloadTask implements Runnable{
             http.connect();
 
             inStream = http.getInputStream();
-            //Todo 将buffer设置的更小一些，也许可以方便的设置
-//            byte[] buffer = new byte[1024*8];
             byte[] buffer = new byte[1024*8];
             int offset;
 
@@ -173,10 +168,11 @@ public class DownloadTask implements Runnable{
             while ((offset = inStream.read(buffer)) != -1){
                 if (isPause){
                     LogUtils.i(TAG, "下载过程 设置了 暂停");
-                    mFileInfo.setDownStatus(Constant.Status.PAUSE);
+                    mFileInfo.setDownloadStatus(DownloadStatus.PAUSE);
                     isPause = false;
                     dbHolder.saveFile(mFileInfo);
                     context.sendBroadcast(intent);
+
                     http.disconnect();
                     accessFile.close();
                     inStream.close();
@@ -184,22 +180,16 @@ public class DownloadTask implements Runnable{
                 }
                 accessFile.write(buffer,0, offset);
                 mFileInfo.setDownloadLocation( mFileInfo.getDownloadLocation()+offset );
-                mFileInfo.setDownStatus(Constant.Status.LOADING);
+                mFileInfo.setDownloadStatus(DownloadStatus.LOADING);
 
-
-                if (testCount > 1024) {
-                    LogUtils.i(TAG, "while循环() -> offest = " + offset);
-                    testCount = 0;
-                }
                 if (SystemClock.uptimeMillis()-millis >= 1000){
                     millis = SystemClock.uptimeMillis();
                     dbHolder.saveFile(mFileInfo);
-                    LogUtils.i(TAG, "while循环() -> 发出广播 mFileInfo" + mFileInfo);
                     context.sendBroadcast(intent);
                 }
             }// end of "while(..."
 
-            mFileInfo.setDownStatus(Constant.Status.COMPLETE);
+            mFileInfo.setDownloadStatus(DownloadStatus.COMPLETE);
             dbHolder.saveFile(mFileInfo);
             context.sendBroadcast(intent);
         } catch (Exception e){

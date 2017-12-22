@@ -3,7 +3,8 @@ package com.yaoxiaowen.download.execute;
 
 import android.content.Intent;
 
-import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.utils.LogUtils;
 
 import java.util.concurrent.BlockingQueue;
@@ -26,12 +27,12 @@ public class DownloadExecutor extends ThreadPoolExecutor{
 
     public void executeTask(DownloadTask task){
         int status = task.getStatus();
-        if (status== Constant.Status.PAUSE || status== Constant.Status.FAIL){
-            task.setFileStatus(Constant.Status.WAIT);
+        if (status== DownloadStatus.PAUSE || status== DownloadStatus.FAIL){
+            task.setFileStatus(DownloadStatus.WAIT);
 
             Intent intent = new Intent();
             intent.setAction(task.getDownLoadInfo().getAction());
-            intent.putExtra(Constant.DOWNLOAD_EXTRA, task.getFileInfo());
+            intent.putExtra(DownloadConstant.DOWNLOAD_EXTRA, task.getFileInfo());
             task.sendBroadcast(intent);
 
             execute(task);

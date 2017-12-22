@@ -3,7 +3,8 @@ package com.yaoxiaowen.download.utils;
 
 import android.support.annotation.IntRange;
 
-import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.DownloadStatus;
 
 /**
  * @author   www.yaoxiaowen.com
@@ -11,32 +12,30 @@ import com.yaoxiaowen.download.Constant;
  * @since 1.0.0
  */
 public class DebugUtils {
-    public static String getStatusDesc(@IntRange(from = Constant.Status.WAIT, to = Constant.Status.UNKNOWN) int status){
+    public static String getStatusDesc(@IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL) int status){
         switch (status){
-            case Constant.Status.WAIT:
+            case DownloadStatus.WAIT:
                 return " wait ";
-            case Constant.Status.PREPARE:
+            case DownloadStatus.PREPARE:
                 return " prepare ";
-            case Constant.Status.LOADING:
+            case DownloadStatus.LOADING:
                 return " loading ";
-            case Constant.Status.PAUSE:
+            case DownloadStatus.PAUSE:
                 return " pause ";
-            case Constant.Status.COMPLETE:
+            case DownloadStatus.COMPLETE:
                 return " complete ";
-            case Constant.Status.FAIL:
+            case DownloadStatus.FAIL:
                 return " fail ";
-            case Constant.Status.UNKNOWN:
-                return " unknown ";
             default:
                 return "  错误的未知状态 ";
         }
     }
 
-    public static String getRequestDictateDesc(@IntRange(from = Constant.Request.loading, to = Constant.Request.pause) int dictate){
+    public static String getRequestDictateDesc(@IntRange(from = DownloadConstant.Request.loading, to = DownloadConstant.Request.pause) int dictate){
         switch (dictate){
-            case Constant.Request.loading:
+            case DownloadConstant.Request.loading:
                 return " loading ";
-            case Constant.Request.pause:
+            case DownloadConstant.Request.pause:
                 return " pause ";
             default:
                 return " dictate描述错误  ";

@@ -6,7 +6,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.bean.DownloadInfo;
 import com.yaoxiaowen.download.bean.FileInfo;
 import com.yaoxiaowen.download.bean.RequestInfo;
@@ -53,13 +54,13 @@ public class DownloadService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (canRequest){
-            LogUtils.i(TAG, "onStartCommand() -> 启动了service服务 intent=" + intent);
+            LogUtils.i(TAG, "onStartCommand() -> 启动了service服务 intent=" + intent + "\t this=" + this);
             canRequest = false;
 
-            if (null!=intent && intent.hasExtra(Constant.SERVICE_INTENT_EXTRA)){
+            if (null!=intent && intent.hasExtra(DownloadConstant.Inner.SERVICE_INTENT_EXTRA)){
                 try {
                     ArrayList<RequestInfo> requesetes =
-                            (ArrayList<RequestInfo>)intent.getSerializableExtra(Constant.SERVICE_INTENT_EXTRA);
+                            (ArrayList<RequestInfo>)intent.getSerializableExtra(DownloadConstant.Inner.SERVICE_INTENT_EXTRA);
                     if (null != requesetes && requesetes.size()>0){
                         for (RequestInfo request : requesetes){
                             executeDownload(request);
@@ -86,20 +87,19 @@ public class DownloadService extends Service{
 
         LogUtils.i(TAG, "executeDownload() -> task=" + task + "\t mFileInfo=" + mFileInfo);
 
-        //Todo 这里为什么会存在如此复杂的状态判断
 
         if (null == task){ //之前没有类似任务
             if (null != mFileInfo){
-                if (mFileInfo.getDownStatus()== Constant.Status.LOADING
-                        || mFileInfo.getDownStatus()== Constant.Status.PREPARE){
+                if (mFileInfo.getDownloadStatus()== DownloadStatus.LOADING
+                        || mFileInfo.getDownloadStatus()== DownloadStatus.PREPARE){
                     //修正文件状态
-                    dbHolder.updateState(mFileInfo.getId(), Constant.Status.PAUSE);
-                }else if (mFileInfo.getDownStatus() == Constant.Status.COMPLETE){
+                    dbHolder.updateState(mFileInfo.getId(), DownloadStatus.PAUSE);
+                }else if (mFileInfo.getDownloadStatus() == DownloadStatus.COMPLETE){
                     if (mDownloadInfo.getFile().exists()){
                         if (!TextUtils.isEmpty(mDownloadInfo.getAction())){
                             Intent intent = new Intent();
                             intent.setAction(mDownloadInfo.getAction());
-                            intent.putExtra(Constant.DOWNLOAD_EXTRA, mFileInfo);
+                            intent.putExtra(DownloadConstant.DOWNLOAD_EXTRA, mFileInfo);
                             sendBroadcast(intent);
                         }
                         return;
@@ -110,17 +110,17 @@ public class DownloadService extends Service{
             }//end of "  null != mFileInfo "
 
             //创建一个下载任务
-            if (requestInfo.getDictate() == Constant.Request.loading){
+            if (requestInfo.getDictate() == DownloadConstant.Request.loading){
                 task = new DownloadTask(this, mDownloadInfo, dbHolder);
                 mTasks.put(mDownloadInfo.getUniqueId(), task);
             }
         }else {
-            //之前已经存在这个任务了
-            //Todo 但是我们既然已经加锁了， 为什么还会存在这个任务
-            if (task.getStatus()==Constant.Status.COMPLETE || task.getStatus()==Constant.Status.LOADING){
+            // 什么情况下, 可能存在这种这种状态
+            if (task.getStatus()== DownloadStatus.COMPLETE || task.getStatus()== DownloadStatus.LOADING){
                 if (!mDownloadInfo.getFile().exists()){
                     task.pause();
                     mTasks.remove(mDownloadInfo.getUniqueId());
+                    LogUtils.i(TAG, " 状态标示完成，但是文件不存在，重新执行下载文件  ");
                     executeDownload(requestInfo);
                     return;
                 }
@@ -128,7 +128,7 @@ public class DownloadService extends Service{
         }
 
         if (null != task){
-            if (requestInfo.getDictate() == Constant.Request.loading){
+            if (requestInfo.getDictate() == DownloadConstant.Request.loading){
                 mExecutor.executeTask(task);
             }else {
                 task.pause();

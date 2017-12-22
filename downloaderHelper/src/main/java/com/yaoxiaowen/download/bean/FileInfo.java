@@ -2,7 +2,7 @@ package com.yaoxiaowen.download.bean;
 
 import android.support.annotation.IntRange;
 
-import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.utils.DebugUtils;
 
 import java.io.Serializable;
@@ -14,15 +14,16 @@ import java.io.Serializable;
  *
  */
 public class FileInfo implements Serializable{
-    private String id;
-    private String downloadUrl;
+    private String id;   //文件的唯一标识符 (url+下载路径)
+    private String downloadUrl;   //下载路径
     private String filePath;  //文件存放的位置
-    //Todo 对于long类型，jvm将其当成两个32位int值存放，所以我认为这里应该添加 volatile
     private long size;   //文件的总尺寸
     private long downloadLocation; // 记录下载的位置
 
-    @IntRange(from = Constant.Status.WAIT, to = Constant.Status.UNKNOWN)
-    private int downStatus = Constant.Status.PAUSE;   //下载的状态信息
+    @IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL)
+    private int downloadStatus = DownloadStatus.PAUSE;   //下载的状态信息
+
+
 
     public FileInfo() {
     }
@@ -67,12 +68,12 @@ public class FileInfo implements Serializable{
         this.downloadLocation = downloadLocation;
     }
 
-    public int getDownStatus() {
-        return downStatus;
+    public int getDownloadStatus() {
+        return downloadStatus;
     }
 
-    public void setDownStatus(int downStatus) {
-        this.downStatus = downStatus;
+    public void setDownloadStatus(int downloadStatus) {
+        this.downloadStatus = downloadStatus;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class FileInfo implements Serializable{
                 ", filePath='" + filePath + '\'' +
                 ", size=" + size +
                 ", downloadLocation=" + downloadLocation +
-                ", downStatus=" + DebugUtils.getStatusDesc(downStatus) +
+                ", downloadStatus=" + DebugUtils.getStatusDesc(downloadStatus) +
                 '}';
     }
 }

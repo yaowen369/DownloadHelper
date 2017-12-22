@@ -4,7 +4,7 @@ import android.util.Log;
 
 /**
  * author：yaowen on 17/5/14 12:54
- * email：yaowen369@gmail.com
+ * email：yaoxiaowen88@gmail.com
  * www.yaoxiaowen.com
  *
  * 在实际使用当中要注意,Log的TAG太长了,会输不出来.
@@ -12,125 +12,117 @@ import android.util.Log;
  *  http://blog.csdn.net/voiceofnet/article/details/49866047
  *
  *  另外,使用Log工具不要使用v,d级别的,原因是因为部分型号手机会屏蔽掉 v,d等低级别的log,导致无法输出
- *  因为v,d级别的log,本工具中使用了  Deprecated 标记
+ *  因此v,d级别的log,本工具中使用了  Deprecated 标记
  */
 
 public class LogUtils {
 
+    //Todo 这两个值，记得进行修改
     public static final String PREFIX = "weny ";
+    private static boolean debug = true;
 
-    /**
-     *  Log.v 级别,TAG使用调用栈中计算出的的TAG, 形式:PREFIX + className + methodName() + lineNum
-     * @param msg
-     */
+    public static void setDebug(boolean b){
+        debug = b;
+    }
+
     @Deprecated
     public static void v(String msg) {
+        if (!debug){
+            return;
+        }
+
         Log.v(getTAG(), msg);
     }
 
-    /**
-     *  Log.v(TAG, msg)
-     * @param TAG
-     * @param msg
-     */
     @Deprecated
     public static void v(String TAG, String msg) {
+        if (!debug){
+            return;
+        }
         Log.v(PREFIX + TAG, msg);
     }
 
-    /**
-     *  Log.d级别,TAG使用调用栈中计算出的的TAG, 形式:PREFIX + className + methodName() + lineNum
-     * @param msg
-     */
     @Deprecated
     public static void d(String msg) {
+        if (!debug){
+            return;
+        }
         Log.d(getTAG(), msg);
     }
 
 
-    /**
-     *  Log.d(TAG, msg);
-     * @param msg
-     */
     @Deprecated
     public static void d(String TAG, String msg) {
+        if (!debug){
+            return;
+        }
         String NewTAG = PREFIX + TAG;
         Log.d(NewTAG, msg);
     }
 
-    /**
-     *  Log.i 级别,TAG使用调用栈中计算出的的TAG, 形式:PREFIX + className + methodName() + lineNum
-     * @param msg
-     */
     public static void i(String msg) {
+        if (!debug){
+            return;
+        }
         Log.i(getTAG(), msg);
     }
 
-    /**
-     *  Log.i(TAG, msg);
-     * @param msg
-     */
     public static void i(String TAG, String msg) {
+        if (!debug){
+            return;
+        }
         Log.i(PREFIX + TAG, msg);
     }
 
 
-    /**
-     * Log.w 级别,TAG使用调用栈中计算出的的TAG, 形式:PREFIX + className + methodName() + lineNum
-     * @param msg
-     */
     public static void w(String msg) {
+        if (!debug){
+            return;
+        }
         Log.w(getTAG(), msg);
     }
 
-    /**
-     * Log.w(TAG, msg)
-     * @param TAG
-     * @param msg
-     */
     public static void w(String TAG, String msg) {
+        if (!debug){
+            return;
+        }
         Log.w(PREFIX + TAG, msg);
     }
 
-    /**
-     * Log.e 级别,TAG使用调用栈中计算出的的TAG, 形式:PREFIX + className + methodName() + lineNum
-     * @param msg
-     */
     public static void e(String msg) {
+        if (!debug){
+            return;
+        }
         Log.e(getTAG(), msg);
     }
 
-    /**
-     * Log.e(TAG, msg);
-     * @param TAG
-     * @param msg
-     */
     public static void e(String TAG, String msg) {
+        if (!debug){
+            return;
+        }
         Log.e(PREFIX + TAG, msg);
     }
 
-    /**
-     * Log.wft 级别,TAG使用调用栈中计算出的的TAG, 形式:PREFIX + className + methodName() + lineNum
-     * @param msg
-     */
     public static void wtf(String msg){
+        if (!debug){
+            return;
+        }
         Log.wtf(getTAG(), msg);
     }
 
-    /**
-     *  Log.wtf(TAG, msg)
-     * @param TAG
-     * @param msg
-     */
     public static void wtf(String TAG, String msg){
+        if (!debug){
+            return;
+        }
         Log.wtf(PREFIX + TAG, msg);
     }
 
     /**
      *  返回值是我们默认的TAG, PREFIX + className + methodName() + lineNum;
-     * @return  eg : weny DispatchActivity initData() 37
-     *          eg : weny DispatchActivity$1 onClick() 58
-     *          eg:  weny DispatchActivity$InnerMyOnClickView onClick() 69
+     *
+     * @return  eg : PREFIX MainActivity initData() 37
+     *          eg : PREFIX MainActivity onClick() 58
+     *          eg:  PREFIX MainActivity onClick() 69
      */
     private static String getTAG() {
         StringBuilder sb = new StringBuilder();

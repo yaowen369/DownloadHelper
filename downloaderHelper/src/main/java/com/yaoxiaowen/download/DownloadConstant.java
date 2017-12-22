@@ -6,18 +6,7 @@ package com.yaoxiaowen.download;
  * time:  2017/12/18 21:23
  * @since 1.0.0
  */
-public class Constant {
-
-    public static class Status {
-        //标示下载过程中 各种 状态
-        public static final int WAIT = 0;
-        public static final int PREPARE = 1;
-        public static final int LOADING = 2;
-        public static final int PAUSE = 3;
-        public static final int COMPLETE = 4;
-        public static final int FAIL = 5;
-        public static final int UNKNOWN = 6;
-    }
+public class DownloadConstant {
 
     //Db 数据库中用到的字段
     public static class Db {
@@ -38,8 +27,10 @@ public class Constant {
         public static final int pause = 11; //暂停状态
     }
 
+    public static class Inner{
+        public static final String SERVICE_INTENT_EXTRA = "service_intent_extra";
+    }
+
     //用于intent数据的传递
     public static final String DOWNLOAD_EXTRA = "downloadExtra";
-
-    public static final String SERVICE_INTENT_EXTRA = "service_intent_extra";
 }

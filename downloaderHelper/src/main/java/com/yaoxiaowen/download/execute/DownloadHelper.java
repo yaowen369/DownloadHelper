@@ -2,9 +2,9 @@ package com.yaoxiaowen.download.execute;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.support.annotation.Nullable;
 
-import com.yaoxiaowen.download.Constant;
+import com.yaoxiaowen.download.DownloadConstant;
 import com.yaoxiaowen.download.bean.DownloadInfo;
 import com.yaoxiaowen.download.bean.RequestInfo;
 import com.yaoxiaowen.download.service.DownloadService;
@@ -46,24 +46,42 @@ public class DownloadHelper {
      */
     public synchronized void submit(Context context){
         if (requests.isEmpty()){
-            LogUtils.i("没有下载任务可供执行");
+            LogUtils.w("没有下载任务可供执行");
             return;
         }
         Intent intent = new Intent(context, DownloadService.class);
-        intent.putExtra(Constant.SERVICE_INTENT_EXTRA, requests);
+        intent.putExtra(DownloadConstant.Inner.SERVICE_INTENT_EXTRA, requests);
         context.startService(intent);
         requests.clear();
     }// end of "submit(..."
 
-    public DownloadHelper addTask(String url, File file){
-        return addTask(url, file, null);
-    }
-
-    public DownloadHelper addTask(String url, File file, String action){
-        RequestInfo requestInfo = createRequest(url, file, action, Constant.Request.loading);
+    /**
+     * 添加 新的下载任务
+     */
+    public DownloadHelper addTask(String url, File file, @Nullable String action){
+        RequestInfo requestInfo = createRequest(url, file, action, DownloadConstant.Request.loading);
         LogUtils.i(TAG, "addTask() requestInfo=" + requestInfo);
 
         requests.add(requestInfo);
+        return this;
+    }
+
+    /**
+     *  暂停某个下载任务
+     */
+    public DownloadHelper pauseTask(String url, File file, @Nullable String action){
+        RequestInfo requestInfo = createRequest(url, file, action, DownloadConstant.Request.pause);
+        LogUtils.i(TAG, "pauseTask() -> requestInfo=" + requestInfo);
+        requests.add(requestInfo);
+        return this;
+    }
+
+    /**
+     * 设定该模块是否输出 debug信息
+     * Todo 要重构log模块, 对于我们的静态内部类，目前还不生效
+     */
+    private DownloadHelper setDebug(boolean isDebug){
+        LogUtils.setDebug(isDebug);
         return this;
     }
 

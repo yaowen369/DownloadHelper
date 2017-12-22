@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.yaoxiaowen.download.sample.MainActivity">
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp"
+    tools:context="com.yaoxiaowen.download.sample.SimpleMainActivity">
 
     <TextView
         android:id="@+id/firstTitle"
@@ -23,7 +25,68 @@
     <Button
         android:id="@+id/firstBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="#017cd6"
+        android:layout_marginBottom="35dp"
         android:text="下载" />
+
+
+    <!-- 第2组 -->
+    <TextView
+        android:id="@+id/secondTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0" />
+
+    <ProgressBar
+        android:id="@+id/secondProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+
+    <Button
+        android:id="@+id/secondBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="#017cd6"
+        android:layout_marginBottom="35dp"
+        android:text="下载" />
+
+
+    <!-- 第三组 -->
+    <TextView
+        android:id="@+id/thirdTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0" />
+
+    <ProgressBar
+        android:id="@+id/thirdProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+
+    <Button
+        android:id="@+id/thirdBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="#017cd6"
+        android:text="下载" />
+
+    <!--删除所有文件按钮-->
+
+    <Button
+        android:id="@+id/deleteAllBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="删除所有文件"
+        />
+
 
 </LinearLayout>
