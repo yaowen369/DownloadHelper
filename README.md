@@ -110,7 +110,7 @@ compile 'com.yaoxiaowen:download:1.3.0'
 > 使用方式很简单，这里有两个demo。[执行三个下载任务](https://github.com/yaowen369/DownloadHelper/blob/master/sample/src/main/java/com/yaoxiaowen/download/sample/MainActivity.java)  或 [执行一个下载任务](https://github.com/yaowen369/DownloadHelper/blob/master/sample/src/main/java/com/yaoxiaowen/download/sample/SimpleMainActivity.java)
 
 ## API和相关常量
-1. #### **1. DownloadHelper.java**
+#### **1. DownloadHelper.java**
 ```java
 package com.yaoxiaowen.download;
 /**
