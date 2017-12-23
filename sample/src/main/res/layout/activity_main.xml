@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
-        android:background="#017cd6"
+        android:background="@drawable/shape_btn_blue"
         android:layout_marginBottom="35dp"
         android:text="下载" />
 
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
-        android:background="#017cd6"
+        android:background="@drawable/shape_btn_blue"
         android:layout_marginBottom="35dp"
         android:text="下载" />
 
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
-        android:background="#017cd6"
+        android:background="@drawable/shape_btn_blue"
         android:text="下载" />
 
     <!--删除所有文件按钮-->
@@ -84,7 +84,9 @@
         android:id="@+id/deleteAllBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
         android:text="删除所有文件"
         />
 

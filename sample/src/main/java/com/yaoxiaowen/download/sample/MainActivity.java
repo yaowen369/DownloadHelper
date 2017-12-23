@@ -201,11 +201,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (TextUtils.equals(firstContent, START)){
             mDownloadHelper.addTask(firstUrl, firstFile, FIRST_ACTION).submit(MainActivity.this);
             firstBtn.setText(PAUST);
-            firstBtn.setBackgroundColor(0xcccccccc);
+            firstBtn.setBackgroundResource(R.drawable.shape_btn_orangle);
+
         }else {
             mDownloadHelper.pauseTask(firstUrl, firstFile, FIRST_ACTION).submit(MainActivity.this);
             firstBtn.setText(START);
-            firstBtn.setBackgroundColor(0x017cd6);
+            firstBtn.setBackgroundResource(R.drawable.shape_btn_blue);
         }
     }
 
@@ -214,11 +215,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (TextUtils.equals(secondContent, START)){
             mDownloadHelper.addTask(secondUrl, secondFile, SECOND_ACTION).submit(MainActivity.this);
             secondBtn.setText(PAUST);
-            secondBtn.setBackgroundColor(0xcccccccc);
+            secondBtn.setBackgroundResource(R.drawable.shape_btn_orangle);
         }else {
             mDownloadHelper.pauseTask(secondUrl, secondFile, SECOND_ACTION).submit(MainActivity.this);
             secondBtn.setText(START);
-            secondBtn.setBackgroundColor(0x017cd6);
+            secondBtn.setBackgroundResource(R.drawable.shape_btn_blue);
         }
     }
 
@@ -227,11 +228,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (TextUtils.equals(thirdContent, START)){
             mDownloadHelper.addTask(thirdUrl, thirdFile, THIRD_ACTION).submit(MainActivity.this);
             thirdBtn.setText(PAUST);
-            thirdBtn.setBackgroundColor(0xcccccccc);
+            thirdBtn.setBackgroundResource(R.drawable.shape_btn_orangle);
         }else {
             mDownloadHelper.pauseTask(thirdUrl, thirdFile, THIRD_ACTION).submit(MainActivity.this);
             thirdBtn.setText(START);
-            thirdBtn.setBackgroundColor(0x017cd6);
+            thirdBtn.setBackgroundResource(R.drawable.shape_btn_blue);
         }
     }
 
@@ -250,6 +251,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float totalSize = fileInfo.getSize()  / 1024.0f / 1024;
 
 //        StringBuilder sb = new StringBuilder();
+        ////        sb.append(fileName  + "\t  ( " + progress + "% )" + "\n");
+//        sb.append("状态: " + DebugUtils.getStatusDesc(fileInfo.getDownloadStatus()) + " \t ");
+//        sb.append(Utils_Parse.getTwoDecimalsStr(downSize) + "M/" + Utils_Parse.getTwoDecimalsStr(totalSize) + "M\n");
+
+        // 我们将字体颜色设置的好看一些而已
         int count = 0;
         SpannableStringBuilder sb = new SpannableStringBuilder();
         sb.append(fileName);
@@ -269,9 +275,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sb.append(Utils_Parse.getTwoDecimalsStr(downSize) + "M/" + Utils_Parse.getTwoDecimalsStr(totalSize) + "M\n");
         sb.setSpan(new ForegroundColorSpan(textColorRandarRed), count, sb.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-////        sb.append(fileName  + "\t  ( " + progress + "% )" + "\n");
-//        sb.append("状态: " + DebugUtils.getStatusDesc(fileInfo.getDownloadStatus()) + " \t ");
-//        sb.append(Utils_Parse.getTwoDecimalsStr(downSize) + "M/" + Utils_Parse.getTwoDecimalsStr(totalSize) + "M\n");
+
+
         textView.setText(sb);
 
 
