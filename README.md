@@ -1,7 +1,7 @@
 ## 功能特性
 
 + 断点续传
-+ 支持多线程*(目前版本仅支持单任务单线程，多任务才多线程，未来会继续完善单任务的多线程执行)*
++ 支持多线程 *(目前版本仅支持单任务单线程，多任务才多线程，未来会继续完善单任务的多线程执行)*
 
 ## 使用本项目的理由
 
@@ -57,6 +57,7 @@ compile 'com.yaoxiaowen:download:1.3.0'
 ```
 
 + 重启
+
 当下载任务被暂停/结束后，想要重新启动时，和开始下载操作相同，直接 `addTask().submit`即可从上一次下载断点处开始下载。
 
 
@@ -66,9 +67,10 @@ compile 'com.yaoxiaowen:download:1.3.0'
 
 #### 3, **广播接收信息**
 我们通过广播来进行通讯。广播携带下载文件的相关信息。
+
 以下情况会发送广播。
 > + 当下载任务的状态发生改变时。(比如开始，准备，失败,暂停等状态改变).
-> + 在**LOADING(下载中)**状态时，默认每间隔1s就发送广播。
+> + 在 **LOADING(下载中)** 状态时，默认每间隔1s就发送广播。
 
 ###### 注册广播
 ```java
@@ -108,7 +110,7 @@ compile 'com.yaoxiaowen:download:1.3.0'
 > 使用方式很简单，这里有两个demo。[执行三个下载任务](https://github.com/yaowen369/DownloadHelper/blob/master/sample/src/main/java/com/yaoxiaowen/download/sample/MainActivity.java)  或 [执行一个下载任务](https://github.com/yaowen369/DownloadHelper/blob/master/sample/src/main/java/com/yaoxiaowen/download/sample/SimpleMainActivity.java)
 
 ## API和相关常量
-#### **DownloadHelper.java**
+1. #### **1. DownloadHelper.java**
 ```java
 package com.yaoxiaowen.download;
 /**
@@ -144,7 +146,7 @@ public class DownloadHelper {
 
 ```
 
-#### **FileInfo.java**
+#### **2. FileInfo.java**
 
 ```java
 package com.yaoxiaowen.download;
@@ -163,7 +165,7 @@ public class FileInfo implements Serializable{
 }
 ```
 
-#### **DownloadConstant.java**
+#### **3. DownloadConstant.java**
 ```java
 package com.yaoxiaowen.download;
 public class DownloadConstant {
@@ -177,7 +179,7 @@ public class DownloadConstant {
 ```
 
 
-#### **DownloadConstant.java**
+#### **4. DownloadConstant.java**
 
 ```java
 package com.yaoxiaowen.download;
@@ -210,5 +212,5 @@ public class DownloadStatus {
 > 关于多线程断点续传下载的文章，网上很多了，大家可以参考。
 
 
-
+## other
 + *使用过程中有什么问题，可以提交issues或联系本人，尽力予以解决。*
