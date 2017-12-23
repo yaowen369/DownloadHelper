@@ -11,7 +11,6 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -19,12 +18,10 @@ import android.widget.TextView;
 
 import com.yaoxiaowen.download.DownloadConstant;
 import com.yaoxiaowen.download.DownloadStatus;
-import com.yaoxiaowen.download.bean.FileInfo;
-import com.yaoxiaowen.download.execute.DownloadHelper;
+import com.yaoxiaowen.download.FileInfo;
+import com.yaoxiaowen.download.DownloadHelper;
 import com.yaoxiaowen.download.sample.utils.Utils_Parse;
-import com.yaoxiaowen.download.sample.utils.Utils_Toast;
 import com.yaoxiaowen.download.utils.DebugUtils;
-import com.yaoxiaowen.download.utils.LogUtils;
 
 import java.io.File;
 
@@ -38,10 +35,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String TAG = "weny SimpleMainActivity";
 
 
-    //同程旅游 app 下载地址
-    private static final String firstUrl = "http://gdown.baidu.com/data/wisegame/e44001b8cb260aa5/wangyiyunyinle_103.apk";
+    //Todo 同程旅游的下载地址 ：     "http://s.ly.com/tTV79";
+    //为什么下载不下来，这个 网页做了什么, 回头要研究
+
+    //淘宝 app 下载地址
+    private static final String firstUrl = "http://ucan.25pp.com/Wandoujia_web_seo_baidu_homepage.apk";
     private File firstFile;
-    private String firstName = "同程旅游.apk";
+    private String firstName = "豌豆荚.apk";
     private static final String FIRST_ACTION = "download_helper_first_action";
 
 
@@ -91,17 +91,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (null != intent){
                 switch (intent.getAction()){
                     case FIRST_ACTION: {
-                        FileInfo firstFileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.DOWNLOAD_EXTRA);
+                        FileInfo firstFileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD);
                         updateTextview(firstTitle, firstProgressBar, firstFileInfo, firstName, firstBtn);
                     }
                     break;
                     case SECOND_ACTION: {
-                        FileInfo secondFileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.DOWNLOAD_EXTRA);
+                        FileInfo secondFileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD);
                         updateTextview(secondTitle, secondProgressBar, secondFileInfo, secondName, secondBtn);
                     }
                     break;
                     case THIRD_ACTION: {
-                        FileInfo thirdFileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.DOWNLOAD_EXTRA);
+                        FileInfo thirdFileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD);
                         updateTextview(thirdTitle, thirdProgressBar, thirdFileInfo, thirdName, thirdBtn);
                     }
                     break;

@@ -3,7 +3,7 @@ package com.yaoxiaowen.download.utils;
 
 import android.support.annotation.IntRange;
 
-import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.config.InnerConstant;
 import com.yaoxiaowen.download.DownloadStatus;
 
 /**
@@ -31,11 +31,11 @@ public class DebugUtils {
         }
     }
 
-    public static String getRequestDictateDesc(@IntRange(from = DownloadConstant.Request.loading, to = DownloadConstant.Request.pause) int dictate){
+    public static String getRequestDictateDesc(@IntRange(from = InnerConstant.Request.loading, to = InnerConstant.Request.pause) int dictate){
         switch (dictate){
-            case DownloadConstant.Request.loading:
+            case InnerConstant.Request.loading:
                 return " loading ";
-            case DownloadConstant.Request.pause:
+            case InnerConstant.Request.pause:
                 return " pause ";
             default:
                 return " dictate描述错误  ";

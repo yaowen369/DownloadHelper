@@ -9,6 +9,11 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+        //http://blog.csdn.net/wwj_748/article/details/51913280
+        // copy from utils project  171213
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:latest.release'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
@@ -20,4 +25,17 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task javadoc(type: Javadoc) {
+    options.encoding = "utf-8"
+}
+
+
+// copy from utils project  171213
+allprojects {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+    }
 }

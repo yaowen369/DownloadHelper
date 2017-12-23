@@ -9,7 +9,7 @@ import android.util.Log;
 import com.yaoxiaowen.download.DownloadConstant;
 import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.bean.DownloadInfo;
-import com.yaoxiaowen.download.bean.FileInfo;
+import com.yaoxiaowen.download.FileInfo;
 import com.yaoxiaowen.download.db.DbHolder;
 import com.yaoxiaowen.download.utils.LogUtils;
 
@@ -124,7 +124,7 @@ public class DownloadTask implements Runnable{
 
         Intent intent = new Intent();
         intent.setAction(info.getAction());
-        intent.putExtra(DownloadConstant.DOWNLOAD_EXTRA, mFileInfo);
+        intent.putExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD, mFileInfo);
         context.sendBroadcast(intent);
 
         RandomAccessFile accessFile = null;

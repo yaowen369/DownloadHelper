@@ -24,11 +24,11 @@
         <activity android:name=".SimpleMainActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
-
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
+        <!-- 注册service -->
         <service android:name="com.yaoxiaowen.download.service.DownloadService"/>
     </application>
 

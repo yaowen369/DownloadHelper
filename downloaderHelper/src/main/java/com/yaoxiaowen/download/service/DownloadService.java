@@ -7,9 +7,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.config.InnerConstant;
 import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.bean.DownloadInfo;
-import com.yaoxiaowen.download.bean.FileInfo;
+import com.yaoxiaowen.download.FileInfo;
 import com.yaoxiaowen.download.bean.RequestInfo;
 import com.yaoxiaowen.download.db.DbHolder;
 import com.yaoxiaowen.download.execute.DownloadExecutor;
@@ -57,10 +58,10 @@ public class DownloadService extends Service{
             LogUtils.i(TAG, "onStartCommand() -> 启动了service服务 intent=" + intent + "\t this=" + this);
             canRequest = false;
 
-            if (null!=intent && intent.hasExtra(DownloadConstant.Inner.SERVICE_INTENT_EXTRA)){
+            if (null!=intent && intent.hasExtra(InnerConstant.Inner.SERVICE_INTENT_EXTRA)){
                 try {
                     ArrayList<RequestInfo> requesetes =
-                            (ArrayList<RequestInfo>)intent.getSerializableExtra(DownloadConstant.Inner.SERVICE_INTENT_EXTRA);
+                            (ArrayList<RequestInfo>)intent.getSerializableExtra(InnerConstant.Inner.SERVICE_INTENT_EXTRA);
                     if (null != requesetes && requesetes.size()>0){
                         for (RequestInfo request : requesetes){
                             executeDownload(request);
@@ -99,7 +100,7 @@ public class DownloadService extends Service{
                         if (!TextUtils.isEmpty(mDownloadInfo.getAction())){
                             Intent intent = new Intent();
                             intent.setAction(mDownloadInfo.getAction());
-                            intent.putExtra(DownloadConstant.DOWNLOAD_EXTRA, mFileInfo);
+                            intent.putExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD, mFileInfo);
                             sendBroadcast(intent);
                         }
                         return;
@@ -110,7 +111,7 @@ public class DownloadService extends Service{
             }//end of "  null != mFileInfo "
 
             //创建一个下载任务
-            if (requestInfo.getDictate() == DownloadConstant.Request.loading){
+            if (requestInfo.getDictate() == InnerConstant.Request.loading){
                 task = new DownloadTask(this, mDownloadInfo, dbHolder);
                 mTasks.put(mDownloadInfo.getUniqueId(), task);
             }
@@ -128,7 +129,7 @@ public class DownloadService extends Service{
         }
 
         if (null != task){
-            if (requestInfo.getDictate() == DownloadConstant.Request.loading){
+            if (requestInfo.getDictate() == InnerConstant.Request.loading){
                 mExecutor.executeTask(task);
             }else {
                 task.pause();

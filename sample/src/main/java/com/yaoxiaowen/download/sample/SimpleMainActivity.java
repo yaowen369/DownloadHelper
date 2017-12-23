@@ -14,13 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yaoxiaowen.download.DownloadConstant;
-import com.yaoxiaowen.download.DownloadStatus;
-import com.yaoxiaowen.download.bean.FileInfo;
-import com.yaoxiaowen.download.execute.DownloadHelper;
+import com.yaoxiaowen.download.FileInfo;
+import com.yaoxiaowen.download.DownloadHelper;
 import com.yaoxiaowen.download.sample.utils.Utils_Parse;
 import com.yaoxiaowen.download.sample.utils.Utils_Toast;
 import com.yaoxiaowen.download.utils.DebugUtils;
-import com.yaoxiaowen.download.utils.LogUtils;
 
 import java.io.File;
 
@@ -34,40 +32,77 @@ public class SimpleMainActivity extends AppCompatActivity {
     public static final String TAG = "weny SimpleMainActivity";
 
 
-    //同程旅游 app 下载地址
-    private static final String firstUrl = "http://gdown.baidu.com/data/wisegame/e44001b8cb260aa5/wangyiyunyinle_103.apk";
-    private File firstFile;
-    private static final String FIRST_ACTION = "download_helper_first_action";
-
-
-
-
-
-    private DownloadHelper mDownloadHelper;
-
-
+    //淘宝 app 下载地址
+    private static final String url = "http://ucan.25pp.com/Wandoujia_web_seo_baidu_homepage.apk";
+    private File mFile;
+    private static final String BC_ACTION = "download_helper_first_action";
+    private String appName = "豌豆荚.apk";
 
     private static final String START = "开始";
     private static final String PAUST = "暂停";
 
 
+    private TextView textView;
+    private ProgressBar progressBar;
+    private Button btn;
+    private Button deleteBtn;
 
-    private TextView firstTitle;
-    private ProgressBar firstProgressBar;
-    private Button firstBtn;
-    private Button deleteAllBtn;
+    private DownloadHelper mDownloadHelper;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (null != intent) {
                 switch (intent.getAction()) {
-                    case FIRST_ACTION:
+                    case BC_ACTION:{
+                        /**
+                         * 我们接收到的FileInfo对象，包含了下载文件的各种信息。
+                         * 然后我们就可以做我们想做的事情了。
+                         * 比如更新进度条，改变状态等。
+                         */
+                        FileInfo fileInfo = (FileInfo) intent.getSerializableExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD);
+
+                        float pro = (float) (fileInfo.getDownloadLocation()*1.0/ fileInfo.getSize());
+                        int progress = (int)(pro*100);
+                        float downSize = fileInfo.getDownloadLocation() / 1024.0f / 1024;
+                        float totalSize = fileInfo.getSize()  / 1024.0f / 1024;
+
+                        StringBuilder sb = new StringBuilder();
+                        sb.append(appName);
+                        sb.append(" 当前状态: " + DebugUtils.getStatusDesc(fileInfo.getDownloadStatus()) + " \t ");
+                        sb.append(Utils_Parse.getTwoDecimalsStr(downSize) + "M/" + Utils_Parse.getTwoDecimalsStr(totalSize) + "M\n" + "( " + progress + "% )");
+                        textView.setText(sb.toString());
+                        progressBar.setProgress(progress);
+                    }
                         break;
                 }
             }
         }
     };
+
+
+//    private BroadcastReceiver receiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if (null != intent) {
+//                switch (intent.getAction()) {
+//                    case BC_ACTION:{
+//                        /**
+//                         * 我们接收到的FileInfo对象，包含了下载文件的各种信息。
+//                         * 然后我们就可以做我们想做的事情了。
+//                         * 比如更新进度条，改变状态等。
+//                         */
+//                        com.yaoxiaowen.download.FileInfo fileInfo =
+//                                (FileInfo) intent.getSerializableExtra(
+//                                        com.yaoxiaowen.download.config.InnerConstant.EXTRA_INTENT_DOWNLOAD);
+//
+//                    }
+//                    break;
+//                    default:
+//                }
+//            }
+//        }//end of "onReceive(..."
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,32 +115,31 @@ public class SimpleMainActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        firstFile = new File(getDir(), "网易云.apk");
+        mFile = new File(getDir(), appName);
 
         mDownloadHelper = DownloadHelper.getInstance();
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(FIRST_ACTION);
-
+        filter.addAction(BC_ACTION);
         registerReceiver(receiver, filter);
     }
 
     private void initView(){
-        firstTitle = (TextView) findViewById(R.id.firstTitle);
-        firstProgressBar = (ProgressBar) findViewById(R.id.firstProgressBar);
-        firstBtn = (Button) findViewById(R.id.firstBtn);
-        deleteAllBtn = (Button) findViewById(R.id.deleteAllBtn);
+        textView = (TextView) findViewById(R.id.title);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        btn = (Button) findViewById(R.id.btn);
+        deleteBtn = (Button) findViewById(R.id.deleteBtn);
 
-        firstBtn.setText(START);
+        btn.setText(START);
     }
 
     private void initListener(){
 
-        firstBtn.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "开始下载");
-                String content = firstBtn.getText().toString().trim();
+                String content = btn.getText().toString().trim();
                 if (TextUtils.equals(content, START)){
                     downFirstApk();
                 }else if (TextUtils.equals(content, PAUST)){
@@ -114,17 +148,17 @@ public class SimpleMainActivity extends AppCompatActivity {
             }
         });
 
-        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (firstFile.exists()){
-                    boolean result = firstFile.delete();
+                if (mFile.exists()){
+                    boolean result = mFile.delete();
                     String resultStr = result ? "成功" : "失败";
-                    Utils_Toast.show(getBaseContext(), "删除 firstFile  " + resultStr);
+                    Utils_Toast.show(getBaseContext(), "删除 mFile  " + resultStr);
 
                 } else {
-                    Utils_Toast.show(getBaseContext(), "不存在 firstFile ");
+                    Utils_Toast.show(getBaseContext(), "不存在 mFile ");
                 }
             }
         });
@@ -140,14 +174,12 @@ public class SimpleMainActivity extends AppCompatActivity {
     }
 
     private void downFirstApk(){
-//        mDownloadHelper.addTask(firstUrl, firstFile, FIRST_ACTION).submit(this);
-        mDownloadHelper.addTask(firstUrl, firstFile, FIRST_ACTION).submit(SimpleMainActivity.this);
+        DownloadHelper.getInstance().addTask(url, mFile, BC_ACTION).submit(SimpleMainActivity.this);
+
     }
 
     private void pauseFirstApk(){
-        LogUtils.i(TAG, "pauseFirstApk() -> SimpleMainActivity.this=" + SimpleMainActivity.this);
-        mDownloadHelper.pauseTask(firstUrl, firstFile, FIRST_ACTION).submit(SimpleMainActivity.this);
-
+        DownloadHelper.getInstance().pauseTask(url, mFile, BC_ACTION).submit(SimpleMainActivity.this);
     }
 
 

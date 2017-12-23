@@ -1,8 +1,7 @@
-package com.yaoxiaowen.download.bean;
+package com.yaoxiaowen.download;
 
 import android.support.annotation.IntRange;
 
-import com.yaoxiaowen.download.DownloadStatus;
 import com.yaoxiaowen.download.utils.DebugUtils;
 
 import java.io.Serializable;
@@ -14,11 +13,11 @@ import java.io.Serializable;
  *
  */
 public class FileInfo implements Serializable{
-    private String id;   //文件的唯一标识符 (url+下载路径)
-    private String downloadUrl;   //下载路径
-    private String filePath;  //文件存放的位置
+    private String id;   //文件的唯一标识符 (url+文件存储路径)
+    private String downloadUrl;   //下载的url
+    private String filePath;  //文件存放的路径位置
     private long size;   //文件的总尺寸
-    private long downloadLocation; // 记录下载的位置
+    private long downloadLocation; // 下载的位置(就是当前已经下载过的size，也是断点的位置)
 
     @IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL)
     private int downloadStatus = DownloadStatus.PAUSE;   //下载的状态信息

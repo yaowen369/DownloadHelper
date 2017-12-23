@@ -7,8 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import com.yaoxiaowen.download.DownloadConstant;
-import com.yaoxiaowen.download.bean.FileInfo;
+import com.yaoxiaowen.download.config.InnerConstant;
+import com.yaoxiaowen.download.FileInfo;
 
 import java.io.File;
 
@@ -32,17 +32,17 @@ public class DbHolder {
         }
 
         ContentValues values = new ContentValues();
-        values.put(DownloadConstant.Db.id, downloadFile.getId());
-        values.put(DownloadConstant.Db.downloadUrl, downloadFile.getDownloadUrl());
-        values.put(DownloadConstant.Db.filePath, downloadFile.getFilePath());
-        values.put(DownloadConstant.Db.size, downloadFile.getSize());
-        values.put(DownloadConstant.Db.downloadLocation, downloadFile.getDownloadLocation());
-        values.put(DownloadConstant.Db.downloadStatus, downloadFile.getDownloadStatus());
+        values.put(InnerConstant.Db.id, downloadFile.getId());
+        values.put(InnerConstant.Db.downloadUrl, downloadFile.getDownloadUrl());
+        values.put(InnerConstant.Db.filePath, downloadFile.getFilePath());
+        values.put(InnerConstant.Db.size, downloadFile.getSize());
+        values.put(InnerConstant.Db.downloadLocation, downloadFile.getDownloadLocation());
+        values.put(InnerConstant.Db.downloadStatus, downloadFile.getDownloadStatus());
 
         if (has(downloadFile.getId())){
-            mDb.update(DownloadConstant.Db.NAME_TABALE, values, DownloadConstant.Db.id + " = ?", new String[]{downloadFile.getId()});
+            mDb.update(InnerConstant.Db.NAME_TABALE, values, InnerConstant.Db.id + " = ?", new String[]{downloadFile.getId()});
         }else {
-            mDb.insert(DownloadConstant.Db.NAME_TABALE, null, values);
+            mDb.insert(InnerConstant.Db.NAME_TABALE, null, values);
         }
 
     }//end of "saveFile(..."
@@ -54,22 +54,22 @@ public class DbHolder {
         }
 
         ContentValues values = new ContentValues();
-        values.put(DownloadConstant.Db.downloadStatus, state);
-        mDb.update(DownloadConstant.Db.NAME_TABALE, values, DownloadConstant.Db.id + " = ?", new String[]{id});
+        values.put(InnerConstant.Db.downloadStatus, state);
+        mDb.update(InnerConstant.Db.NAME_TABALE, values, InnerConstant.Db.id + " = ?", new String[]{id});
     }
 
 
     public FileInfo getFileInfo(String id){
-        Cursor cursor = mDb.query(DownloadConstant.Db.NAME_TABALE, null, " " + DownloadConstant.Db.id + " = ? ", new String[]{id}, null, null, null);
+        Cursor cursor = mDb.query(InnerConstant.Db.NAME_TABALE, null, " " + InnerConstant.Db.id + " = ? ", new String[]{id}, null, null, null);
         FileInfo downloadFile = null;
         while (cursor.moveToNext()){
             downloadFile = new FileInfo();
-            downloadFile.setId( cursor.getString(cursor.getColumnIndex( DownloadConstant.Db.id)) );
-            downloadFile.setDownloadUrl( cursor.getString(cursor.getColumnIndex( DownloadConstant.Db.downloadUrl)) );
-            downloadFile.setFilePath( cursor.getString(cursor.getColumnIndex( DownloadConstant.Db.filePath)) );
-            downloadFile.setSize( cursor.getLong( cursor.getColumnIndex(DownloadConstant.Db.size)) );
-            downloadFile.setDownloadLocation( cursor.getLong( cursor.getColumnIndex(DownloadConstant.Db.downloadLocation)));
-            downloadFile.setDownloadStatus( cursor.getInt(cursor.getColumnIndex(DownloadConstant.Db.downloadStatus)) );
+            downloadFile.setId( cursor.getString(cursor.getColumnIndex( InnerConstant.Db.id)) );
+            downloadFile.setDownloadUrl( cursor.getString(cursor.getColumnIndex( InnerConstant.Db.downloadUrl)) );
+            downloadFile.setFilePath( cursor.getString(cursor.getColumnIndex( InnerConstant.Db.filePath)) );
+            downloadFile.setSize( cursor.getLong( cursor.getColumnIndex(InnerConstant.Db.size)) );
+            downloadFile.setDownloadLocation( cursor.getLong( cursor.getColumnIndex(InnerConstant.Db.downloadLocation)));
+            downloadFile.setDownloadStatus( cursor.getInt(cursor.getColumnIndex(InnerConstant.Db.downloadStatus)) );
 
             File file = new File(downloadFile.getFilePath());
             if (!file.exists()){
@@ -88,12 +88,12 @@ public class DbHolder {
      */
     public void deleteFileInfo(String id){
         if (has(id)){
-            mDb.delete(DownloadConstant.Db.NAME_TABALE, DownloadConstant.Db.id + " = ?", new String[]{id});
+            mDb.delete(InnerConstant.Db.NAME_TABALE, InnerConstant.Db.id + " = ?", new String[]{id});
         }
     }
 
     private boolean has(String id){
-        Cursor cursor = mDb.query(DownloadConstant.Db.NAME_TABALE, null,  " " + DownloadConstant.Db.id + " = ? ", new String[]{id}, null, null, null);
+        Cursor cursor = mDb.query(InnerConstant.Db.NAME_TABALE, null,  " " + InnerConstant.Db.id + " = ? ", new String[]{id}, null, null, null);
         boolean has = cursor.moveToNext();
         cursor.close();
         return has;

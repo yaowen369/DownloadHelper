@@ -32,7 +32,7 @@ public class DownloadExecutor extends ThreadPoolExecutor{
 
             Intent intent = new Intent();
             intent.setAction(task.getDownLoadInfo().getAction());
-            intent.putExtra(DownloadConstant.DOWNLOAD_EXTRA, task.getFileInfo());
+            intent.putExtra(DownloadConstant.EXTRA_INTENT_DOWNLOAD, task.getFileInfo());
             task.sendBroadcast(intent);
 
             execute(task);

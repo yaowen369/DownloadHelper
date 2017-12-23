@@ -5,7 +5,7 @@ import android.content.pm.PackageInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.yaoxiaowen.download.DownloadConstant;
+import com.yaoxiaowen.download.config.InnerConstant;
 import com.yaoxiaowen.download.utils.LogUtils;
 
 
@@ -18,7 +18,7 @@ public class DbOpenHelper extends SQLiteOpenHelper{
     public static final String TAG = "DbOpenHelper";
 
     public DbOpenHelper(Context context) {
-        super(context, DownloadConstant.Db.NAME_DB, null, getVersionCode(context));
+        super(context, InnerConstant.Db.NAME_DB, null, getVersionCode(context));
     }
 
     private static int getVersionCode(Context context){
@@ -35,14 +35,14 @@ public class DbOpenHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String info = "create table if not exists " + DownloadConstant.Db.NAME_TABALE
+        String info = "create table if not exists " + InnerConstant.Db.NAME_TABALE
                 + "(" +
-                DownloadConstant.Db.id + " varchar(500)," +
-                DownloadConstant.Db.downloadUrl + " varchar(100)," +
-                DownloadConstant.Db.filePath + " varchar(100)," +
-                DownloadConstant.Db.size + " integer," +
-                DownloadConstant.Db.downloadLocation + " integer," +
-                DownloadConstant.Db.downloadStatus + " integer)";
+                InnerConstant.Db.id + " varchar(500)," +
+                InnerConstant.Db.downloadUrl + " varchar(100)," +
+                InnerConstant.Db.filePath + " varchar(100)," +
+                InnerConstant.Db.size + " integer," +
+                InnerConstant.Db.downloadLocation + " integer," +
+                InnerConstant.Db.downloadStatus + " integer)";
 
         LogUtils.i(TAG, "onCreate() -> info=" + info);
         db.execSQL(info);
@@ -51,7 +51,7 @@ public class DbOpenHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //对于下载来讲，其实是不存在这种升级数据库的业务的.所以我们直接删除重新建表
-        db.execSQL("drop table if exists " + DownloadConstant.Db.NAME_TABALE);
+        db.execSQL("drop table if exists " + InnerConstant.Db.NAME_TABALE);
         onCreate(db);
     }
 }
