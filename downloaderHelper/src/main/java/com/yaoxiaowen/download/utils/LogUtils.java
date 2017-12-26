@@ -19,7 +19,7 @@ public class LogUtils {
 
     //Todo 这两个值，记得进行修改
     public static final String PREFIX = "weny ";
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static void setDebug(boolean b){
         debug = b;
