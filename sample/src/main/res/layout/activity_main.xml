@@ -100,11 +100,12 @@
             android:id="@+id/jumpTestActyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="30dp"
             android:background="@android:color/black"
             android:textColor="@android:color/white"
             android:text="跳转测试acty"
+            android:visibility="gone"
+            tools:visibility="visible"
             />
 
     </LinearLayout>
