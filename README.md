@@ -14,7 +14,7 @@
 
 ## 导入项目
 ```
-compile 'com.yaoxiaowen:download:1.3.0'
+compile 'com.yaoxiaowen:download:1.4.0'
 ```
 
 ## 使用方式
@@ -25,8 +25,6 @@ compile 'com.yaoxiaowen:download:1.3.0'
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- 注册service -->
-    <service android:name="com.yaoxiaowen.download.service.DownloadService"/>
 ```
 
 #### 2,  **开始/暂停/重启 下载任务。**

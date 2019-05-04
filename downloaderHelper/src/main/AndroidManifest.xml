@@ -2,8 +2,14 @@
 
     package="com.yaoxiaowen.download">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:allowBackup="false"
+        android:label="@string/app_name"
         android:supportsRtl="true">
+
+        <!-- 注册service -->
+        <service android:name="com.yaoxiaowen.download.service.DownloadService" />
 
     </application>
 
