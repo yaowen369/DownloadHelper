@@ -80,15 +80,38 @@
 
     <!--删除所有文件按钮-->
 
-    <Button
-        android:id="@+id/deleteAllBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="50dp"
-        android:background="@android:color/black"
-        android:textColor="@android:color/white"
-        android:text="删除所有文件"
-        />
+        >
+
+        <Button
+            android:id="@+id/deleteAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:textColor="@android:color/white"
+            android:text="删除所有文件"
+            />
+
+        <Button
+            android:id="@+id/jumpTestActyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="30dp"
+            android:background="@android:color/black"
+            android:textColor="@android:color/white"
+            android:text="跳转测试acty"
+            />
+
+    </LinearLayout>
+
+
+
+
 
 
 </LinearLayout>

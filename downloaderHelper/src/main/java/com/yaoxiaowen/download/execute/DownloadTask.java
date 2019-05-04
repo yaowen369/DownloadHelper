@@ -36,8 +36,6 @@ public class DownloadTask implements Runnable{
     private DbHolder dbHolder;
     private boolean isPause;
 
-
-
     public DownloadTask(Context context, DownloadInfo info, DbHolder dbHolder) {
         this.context = context;
         this.info = info;
@@ -132,10 +130,14 @@ public class DownloadTask implements Runnable{
         InputStream inStream = null;
 
         try {
-            URL sizeUrl = new URL(info.getUrl());
+
+
+            String realUrl = getRedirectionUrl(info.getUrl());
+            URL sizeUrl = new URL(realUrl);
             HttpURLConnection sizeHttp = (HttpURLConnection)sizeUrl.openConnection();
             sizeHttp.setRequestMethod("GET");
             sizeHttp.connect();
+
             long totalSize = sizeHttp.getContentLength();
             sizeHttp.disconnect();
 
@@ -151,7 +153,7 @@ public class DownloadTask implements Runnable{
             mFileInfo.setSize(totalSize);
             accessFile = new RandomAccessFile(info.getFile(), "rwd");
 
-            URL url = new URL(info.getUrl());
+            URL url = new URL(realUrl);
             http = (HttpURLConnection)url.openConnection();
             http.setConnectTimeout(10000);
             http.setRequestProperty("Connection", "Keep-Alive");
@@ -217,4 +219,30 @@ public class DownloadTask implements Runnable{
 
 
     }//end of "download()"
+
+
+    private String getRedirectionUrl(String sourceUrl){
+
+        String redirUrl = sourceUrl;
+
+        try {
+            URL url = new URL(sourceUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            if (responseCode == 302){
+                redirUrl = conn.getHeaderField("Location");
+                LogUtils.i(TAG, " 下载地址重定向为 = " + redirUrl);
+
+            }
+            conn.disconnect();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return redirUrl;
+    }
 }

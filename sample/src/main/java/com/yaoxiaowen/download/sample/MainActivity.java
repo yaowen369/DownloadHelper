@@ -22,6 +22,7 @@ import com.yaoxiaowen.download.FileInfo;
 import com.yaoxiaowen.download.DownloadHelper;
 import com.yaoxiaowen.download.sample.utils.Utils_Parse;
 import com.yaoxiaowen.download.utils.DebugUtils;
+import com.yaoxiaowen.download.utils.LogUtils;
 
 import java.io.File;
 
@@ -34,27 +35,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     
     public static final String TAG = "weny SimpleMainActivity";
 
-
     //Todo 同程旅游的下载地址 ：     "http://s.ly.com/tTV79";
     //为什么下载不下来，这个 网页做了什么, 回头要研究
 
-    //淘宝 app 下载地址
-    private static final String firstUrl = "http://ucan.25pp.com/Wandoujia_web_seo_baidu_homepage.apk";
+    //豌豆荚 app 下载地址
+    private static final String firstUrl = Constanst.WAN_DOU_JIA_URL;
     private File firstFile;
-    private String firstName = "豌豆荚.apk";
+    private String firstName = Constanst.WAN_DOU_JIA_NAME;
     private static final String FIRST_ACTION = "download_helper_first_action";
 
 
     //美团 app 下载地址
-    private static final String secondUrl = "http://www.meituan.com/mobile/download/meituan/android/meituan?from=new";
+    private static final String secondUrl = Constanst.MEI_TUAN_URL;
     private File secondFile;
-    private String secondName = "美团.apk";
+    private String secondName = Constanst.MEI_TUAN_NAME;
     private static final String SECOND_ACTION = "download_helper_second_action";
 
     // 12306 APP 下载地址
-    private static final String thirdUrl = "http://dynamic.12306.cn/otn/appDownload/androiddownload";
+    private static final String thirdUrl = Constanst.TRAIN_12306_URL;
     private File thirdFile;
-    private String thirdName = "12306.apk";
+    private String thirdName = Constanst.TRAIN_12306_NAME;
     private static final String THIRD_ACTION = "download_helper_third_action";
 
     private DownloadHelper mDownloadHelper;
@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button thirdBtn;
 
     private Button deleteAllBtn;
+    private Button jumpTestActyBtn;
+
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -116,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LogUtils.setDebug(true);
 
         initData();
         initView();
@@ -154,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         thirdBtn.setText(START);
 
         deleteAllBtn = (Button) findViewById(R.id.deleteAllBtn);
+
+        jumpTestActyBtn = findViewById(R.id.jumpTestActyBtn);
     }
 
     private void initListener(){
@@ -162,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         thirdBtn.setOnClickListener(this);
 
         deleteAllBtn.setOnClickListener(this);
+        jumpTestActyBtn.setOnClickListener(this);
     }
 
     @Override
@@ -178,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.deleteAllBtn:
                 deleteAllFile();
+                break;
+            case R.id.jumpTestActyBtn:
+                Intent intent = new Intent(this, TestActivity.class);
+                startActivity(intent);
                 break;
         }
     }
