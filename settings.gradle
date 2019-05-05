@@ -1,1 +1,2 @@
-include ':sample', ':downloaderHelper'
+include ':sample'
+include ':downloaderHelper'

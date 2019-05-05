@@ -2,7 +2,6 @@ package com.yaoxiaowen.download;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import com.yaoxiaowen.download.config.InnerConstant;
 import com.yaoxiaowen.download.bean.DownloadInfo;
@@ -64,7 +63,7 @@ public class DownloadHelper {
      * @param action  下载过程会发出广播信息.该参数是广播的action
      * @return   DownloadHelper自身 (方便链式调用)
      */
-    public DownloadHelper addTask(String url, File file, @Nullable String action){
+    public DownloadHelper addTask(String url, File file, String action){
         RequestInfo requestInfo = createRequest(url, file, action, InnerConstant.Request.loading);
         LogUtils.i(TAG, "addTask() requestInfo=" + requestInfo);
 
@@ -80,7 +79,7 @@ public class DownloadHelper {
      * @param action  下载过程会发出广播信息.该参数是广播的action
      * @return DownloadHelper自身 (方便链式调用)
      */
-    public DownloadHelper pauseTask(String url, File file, @Nullable String action){
+    public DownloadHelper pauseTask(String url, File file, String action){
         RequestInfo requestInfo = createRequest(url, file, action, InnerConstant.Request.pause);
         LogUtils.i(TAG, "pauseTask() -> requestInfo=" + requestInfo);
         requests.add(requestInfo);

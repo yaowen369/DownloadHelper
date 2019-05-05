@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         deleteAllBtn = (Button) findViewById(R.id.deleteAllBtn);
 
-        jumpTestActyBtn = findViewById(R.id.jumpTestActyBtn);
+        jumpTestActyBtn = (Button)findViewById(R.id.jumpTestActyBtn);
     }
 
     private void initListener(){
