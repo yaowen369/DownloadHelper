@@ -6,7 +6,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.yaoxiaowen.download.sample"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -34,6 +34,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation project(':downloaderHelper')
+
+//    implementation 'com.yaoxiaowen:download:1.4.0'
 
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

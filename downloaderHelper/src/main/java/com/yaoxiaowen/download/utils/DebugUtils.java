@@ -1,7 +1,6 @@
 package com.yaoxiaowen.download.utils;
 
 
-import android.support.annotation.IntRange;
 
 import com.yaoxiaowen.download.config.InnerConstant;
 import com.yaoxiaowen.download.DownloadStatus;
@@ -12,7 +11,7 @@ import com.yaoxiaowen.download.DownloadStatus;
  * @since 1.0.0
  */
 public class DebugUtils {
-    public static String getStatusDesc(@IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL) int status){
+    public static String getStatusDesc( int status){
         switch (status){
             case DownloadStatus.WAIT:
                 return " wait ";
@@ -31,7 +30,7 @@ public class DebugUtils {
         }
     }
 
-    public static String getRequestDictateDesc(@IntRange(from = InnerConstant.Request.loading, to = InnerConstant.Request.pause) int dictate){
+    public static String getRequestDictateDesc( int dictate){
         switch (dictate){
             case InnerConstant.Request.loading:
                 return " loading ";

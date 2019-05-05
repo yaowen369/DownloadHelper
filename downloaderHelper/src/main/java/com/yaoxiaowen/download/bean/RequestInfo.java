@@ -1,7 +1,6 @@
 package com.yaoxiaowen.download.bean;
 
 
-import android.support.annotation.IntRange;
 
 import com.yaoxiaowen.download.config.InnerConstant;
 import com.yaoxiaowen.download.utils.DebugUtils;
@@ -15,7 +14,6 @@ import java.io.Serializable;
  */
 public class RequestInfo implements Serializable{
 
-    @IntRange(from = InnerConstant.Request.loading, to = InnerConstant.Request.pause)
     private int dictate;   //下载的控制状态
 
     private DownloadInfo downloadInfo;

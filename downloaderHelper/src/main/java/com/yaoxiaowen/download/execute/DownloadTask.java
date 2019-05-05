@@ -3,7 +3,6 @@ package com.yaoxiaowen.download.execute;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
-import android.support.annotation.IntRange;
 import android.util.Log;
 
 import com.yaoxiaowen.download.DownloadConstant;
@@ -91,7 +90,6 @@ public class DownloadTask implements Runnable{
         isPause = true;
     }
 
-    @IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL)
     public int getStatus(){
         if (null != mFileInfo){
             return mFileInfo.getDownloadStatus();
@@ -99,8 +97,7 @@ public class DownloadTask implements Runnable{
         return DownloadStatus.FAIL;
     }
 
-    public void setFileStatus( @IntRange(from = DownloadStatus.WAIT, to = DownloadStatus.FAIL)
-                               int status){
+    public void setFileStatus(int status){
         mFileInfo.setDownloadStatus(status);
     }
 
