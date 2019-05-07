@@ -14,7 +14,7 @@
 
 ## 导入项目
 ```
-compile 'com.yaoxiaowen:download:1.4.0'
+implementation 'com.yaoxiaowen:download:1.4.1'
 ```
 
 ## 使用方式

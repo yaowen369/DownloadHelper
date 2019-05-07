@@ -35,7 +35,7 @@ dependencies {
 
     implementation project(':downloaderHelper')
 
-//    implementation 'com.yaoxiaowen:download:1.4.0'
+//    implementation 'com.yaoxiaowen:download:1.4.1'
 
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
