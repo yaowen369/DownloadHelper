@@ -65,7 +65,7 @@ publish {
     userOrg = 'yaowen369'
     groupId = 'com.yaoxiaowen'
     artifactId = 'download'
-    publishVersion = '1.4.0'
+    publishVersion = '1.4.1'
     desc = 'An Android download tool that supports multi-threading and breakpoint renewal'
     website = 'https://github.com/yaowen369/DownloadHelper'
 }
