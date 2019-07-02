@@ -1,0 +1,8 @@
+{"routePath":"/vip/main","moduleName":"专车","moduleNo":1,"defaultDisplay":true}
+{"routePath":"/aide/main","moduleName":"帮忙取送","moduleNo":5,"defaultDisplay":true}
+{"routePath":"/go/main","moduleName":"走呗","moduleNo":10,"defaultDisplay":false}
+{"routePath":"/business/main","moduleName":"绿色公务","moduleNo":2,"defaultDisplay":true}
+{"routePath":"/taxi/main","moduleName":"出租车","moduleNo":3,"defaultDisplay":true}
+{"routePath":"/travel/main","moduleName":"自游行","moduleNo":9,"defaultDisplay":true}
+{"routePath":"/mall/main","moduleName":"曹操彩选","moduleNo":8,"defaultDisplay":true}
+{"routePath":"/frbusiness/main","moduleName":"顺风车","moduleNo":16,"defaultDisplay":false}
